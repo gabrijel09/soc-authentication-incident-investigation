@@ -1,4 +1,4 @@
-# SOC Brute Force and Persistence Investigation
+# SOC Authentication and Persistence Investigation
 
 ## Overview
 
@@ -39,6 +39,14 @@ The following alerts were triggered during the investigation:
 ![Triggered Alerts](screenshots/triggered-alerts.png)
 
 ## Investigation
+
+To simulate a brute-force attack, I used Kali Linux and a wordlist containing different passwords to attempt SMB logins to SOC-WIN11.
+
+After multiple attempts, the tool reported a successful login using the password 123123.
+
+I then checked the authentication logs in Splunk to investigate the login attempts.
+
+![Successful Authentication](screenshots/successful-authentication.png)
 
 ### Failed Logon Attempts
 
