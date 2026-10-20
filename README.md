@@ -72,9 +72,29 @@ I searched for `update-check.ps1` in the PowerShell logs.
 
 The logs showed that PowerShell created `update-check.ps1` in the Temp folder.
 
-The script contained:
-
-```powershell
-Write-Output "Persistence test"
-```
+The script contained: `Write-Output "Persistence test"`
 ![PowerShell Script Creation](screenshots/powershell-runkey.png)
+
+I then found a Sysmon **Event ID 1**, which showed that PowerShell started `reg.exe`.
+
+The command created a Run key named `WindowsUpdateCheck` that pointed to `update-check.ps1`.
+
+![Run Key Persistence](screenshots/run-key-persistance.png)
+
+### Persistence Execution
+
+After logging in as `mnovak`, I searched for `update-check.ps1` in Sysmon process creation logs.
+
+I found a Sysmon **Event ID 1** showing that `powershell.exe` was started from `explorer.exe` and executed `update-check.ps1` from the Temp folder.
+
+This confirmed that the Run key persistence was triggered after the user logged in.
+
+![Run Key Execution](screenshots/powershell-run-key-execution.png)
+
+### Script Execution
+
+I checked the PowerShell logs for `update-check.ps1`.
+
+PowerShell **Event ID 4104** showed that the script executed: `Write-Output "Persistence test"`
+
+![Script Execution](screenshots/script-execution.png)
