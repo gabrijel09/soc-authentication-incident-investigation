@@ -98,3 +98,57 @@ I checked the PowerShell logs for `update-check.ps1`.
 PowerShell **Event ID 4104** showed that the script executed: `Write-Output "Persistence test"`
 
 ![Script Execution](screenshots/script-execution.png)
+
+## Timeline
+
+[10:10:15] Multiple Failed Logons
+- Target user: mnovak
+- Failed logons: 39
+- Logon Type: 3 (Network)
+- Source IP: 192.168.64.20
+- Host: SOC-WIN11
+- Conclusion: Multiple failed network logon attempts were made for mnovak from 192.168.64.20.
+
+
+[10:10:17] EventCode 4624 - Successful Logon
+- User: mnovak
+- Logon Type: 3 (Network)
+- Source IP: 192.168.64.20
+- Authentication Package: NTLM
+- Conclusion: mnovak successfully logged in from the same IP that caused the failed logons.
+
+
+[10:20:35] EventCode 4104 - PowerShell Script Block Logging
+- PowerShell created update-check.ps1 in the Temp directory.
+- Script content:
+  Write-Output "Persistence test"
+- Conclusion: PowerShell created the update-check.ps1 script.
+
+
+[10:21:59] EventCode 1 - Sysmon Process Create
+- User: SOC-WIN11\mnovak
+- Image: reg.exe
+- ParentImage: powershell.exe
+- Registry value: WindowsUpdateCheck
+- Conclusion: PowerShell started reg.exe and created a Run key that would execute update-check.ps1 at user logon.
+
+
+[10:21:59] EventCode 4104 - PowerShell Script Block Logging
+- PowerShell executed a reg add command.
+- Target: HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+- Registry value: WindowsUpdateCheck
+- Conclusion: PowerShell configured Run Key persistence for update-check.ps1.
+
+
+[17:51:46] EventCode 1 - Sysmon Process Create
+- User: SOC-WIN11\mnovak
+- Image: powershell.exe
+- ParentImage: explorer.exe
+- CommandLine: powershell.exe -File \Temp\update-check.ps1
+- Conclusion: PowerShell started update-check.ps1 after mnovak logged in.
+
+
+[17:51:48] EventCode 4104 - PowerShell Script Block Logging
+- Script: update-check.ps1
+- ScriptBlockText: Write-Output "Persistence test"
+- Conclusion: PowerShell logs confirmed that update-check.ps1 was executed.
