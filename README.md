@@ -152,3 +152,11 @@ PowerShell **Event ID 4104** showed that the script executed: `Write-Output "Per
 - Script: update-check.ps1
 - ScriptBlockText: Write-Output "Persistence test"
 - Conclusion: PowerShell logs confirmed that update-check.ps1 was executed.
+
+## Conclusion
+
+The investigation started with multiple failed SMB login attempts against the user `mnovak`.
+
+A successful network logon was later found from the same source IP. After that, PowerShell activity and a Registry Run key were used to create persistence on the Windows endpoint.
+
+The Run key was configured to execute `update-check.ps1` when the user logged in. Sysmon and PowerShell logs confirmed that the script was later started and executed.
