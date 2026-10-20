@@ -1,10 +1,14 @@
-# SOC Authentication Incident Investigation
+# SOC Brute Force and Persistence Investigation
 
 ## Overview
 
-This project is a small SOC investigation lab focused on suspicious authentication activity in a Windows environment.
+This project is a small SOC investigation in my isolated home lab focused on suspicious login activity on a Windows endpoint.
 
-The scenario uses Kali Linux to generate multiple SMB login attempts against a Windows 11 endpoint. Splunk is used to collect and analyze the related Windows security logs and alerts.
+Kali Linux was used to generate multiple SMB login attempts against a Windows 11 machine. Splunk was used to collect and analyze the related logs and alerts.
+
+The investigation follows the activity from failed login attempts to a successful login and later persistence activity.
+
+I used Splunk, Windows Security logs, Sysmon, and PowerShell logs to investigate the incident and create a simple timeline.
 
 ## Scenario
 
