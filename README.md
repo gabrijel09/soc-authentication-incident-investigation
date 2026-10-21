@@ -17,6 +17,7 @@ I used Splunk, Windows Security logs, Sysmon, and PowerShell logs to investigate
 - **Splunk** - used for log collection, searching, alerts, and investigation
 - **Splunk Universal Forwarder** - forwards Windows logs to Splunk
 - **Sysmon** - detailed endpoint activity
+- **Windows Security Logs** - used to investigate failed and successful logons
 - **PowerShell Script Block Logging** - used to review executed PowerShell code
 - **Isolated VMware network** - used to keep the lab separated from the rest of the network
 
